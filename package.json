@@ -1,7 +1,7 @@
 {
-  "name": "decky-plugin-template",
+  "name": "RadiYo for SteamDeck",
   "version": "0.0.1",
-  "description": "A template to quickly create decky plugins from scratch, based on TypeScript and webpack",
+  "description": "A decky plugin to play internet radio stations",
   "scripts": {
     "build": "shx rm -rf dist && rollup -c",
     "watch": "rollup -c -w",
