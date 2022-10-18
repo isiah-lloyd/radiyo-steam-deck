@@ -1,10 +1,14 @@
 {
-  "name": "Example Plugin",
-  "author": "John Doe",
-  "flags": ["debug", "_root"],
+  "name": "RadiYo!",
+  "author": "Isiah Lloyd",
+  "flags": [],
   "publish": {
-    "tags": ["template", "root", "dnu"],
-    "description": "Decky example plugin.",
-    "image": "https://opengraph.githubassets.com/1/SteamDeckHomebrew/PluginLoader"
+    "tags": [
+      "media",
+      "music",
+      "radio"
+    ],
+    "description": "Search and play music from internet radio stations while gaming",
+    "image": ""
   }
 }
