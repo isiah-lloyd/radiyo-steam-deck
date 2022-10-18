@@ -9,7 +9,7 @@ See also, [RadiYo! for Discord](https://github.com/isiah-lloyd/RadiYo).
 
 ### Search
 ![](/images/search.jpg?raw=true)
-Search for radio stations by their call sign or the currently playing song
+Search for radio stations by their name or the currently playing song
 
 Search powered by onrad.io
 
