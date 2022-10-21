@@ -47,7 +47,7 @@ export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station)
         return (
             <PanelSection title={`Search Results for ${searchText}`}>
                 {isLoading ? <Spinner /> : null}
-                {results.length === 0 ? (
+                {results.length === 0 && !isLoading ? (
                     <div>
                         <h1><MdSmartToy /></h1>
                         <p>No results found</p>
