@@ -4,15 +4,9 @@ let server: ServerAPI;
 export function setServer(s: ServerAPI) {
     server = s;
 }
-export const fetchNC = async (url: string) => {
-    //TODO: returns string when erroed. catch that.
-    const response = await (await server.fetchNoCors(url,
-        {
-            method: 'GET',
-            headers: {
-                'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36',
-            }
-        })).result as { body: string, headers: object, status: number }
+export const fetchNC = async (url: string, customStation: boolean = false) => {
+    const response = await (await server.callPluginMethod("fetch", { url, customStation })).result as { body: string, headers: object, status: number, error?: string }
+    console.log(response);
     if (response.status === 200) {
         return {
             response,
@@ -21,8 +15,13 @@ export const fetchNC = async (url: string) => {
     }
     else {
         console.error(`error while fetching ${url}`);
-        console.error(response);
-        throw new Error(`There was an error while fetching data`);
+        if (response.error) {
+            console.error(response.error);
+            throw new Error(response.error)
+        }
+        else {
+            throw new Error(`There was an error while fetching data`);
+        }
     }
 }
 export const getRedirect = async (url: string): Promise<string> => {

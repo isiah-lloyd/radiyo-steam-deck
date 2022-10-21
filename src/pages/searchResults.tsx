@@ -12,7 +12,7 @@ import { MdHome, MdSearch, MdSmartToy } from "react-icons/md";
 import { ErrorMessage } from "../errorBox";
 import { Route, Station } from "../interfaces";
 import { RadioPlayer } from "../RadioPlayer";
-import { SearchModal } from "../searchModal";
+import { TextFieldModal } from "../TextFieldModal";
 import { StationList } from "../stationList";
 
 export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station) => void, route: Route }> = ({ query, onStationSelected, route }) => {
@@ -32,6 +32,7 @@ export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station)
     const onSearchModalClosed = async (q: string) => {
         Router.OpenQuickAccessMenu(QuickAccessTab.Decky);
         setResults([]);
+        setErrorMsg(undefined);
         setIsLoading(true);
         setSearchText(q);
         getResults(q);
@@ -47,8 +48,8 @@ export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station)
         return (
             <PanelSection title={`Search Results for ${searchText}`}>
                 {isLoading ? <Spinner /> : null}
-                {results.length === 0 && !isLoading ? (
-                    <div>
+                {results.length === 0 && !isLoading && !errorMsg ? (
+                    <div style={{ textAlign: "center" }}>
                         <h1><MdSmartToy /></h1>
                         <p>No results found</p>
                     </div>
@@ -58,7 +59,7 @@ export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station)
                     <StationList stations={results} onStationSelected={onStationSelected} />
                     <Focusable style={{ display: 'flex', alignItems: 'center', gap: '1rem' }} flow-children="horizontal">
                         <DialogButton style={{ width: '50%', minWidth: 0 }} onClick={() => route.changePage('home')}><MdHome /></DialogButton>
-                        <DialogButton onClick={() => showModal(<SearchModal onClosed={onSearchModalClosed} />)} style={{ width: '50%', minWidth: 0 }}><MdSearch /></DialogButton>
+                        <DialogButton onClick={() => showModal(<TextFieldModal label="Search" placeholder="Search by station name or artists" onClosed={onSearchModalClosed} />)} style={{ width: '50%', minWidth: 0 }}><MdSearch /></DialogButton>
                     </Focusable>
                 </div>
             </PanelSection>

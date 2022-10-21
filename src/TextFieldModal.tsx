@@ -1,9 +1,11 @@
 import { ModalRoot, ModalRootProps, TextField } from 'decky-frontend-lib';
 import { useEffect, useRef, useState } from 'react';
 type props = ModalRootProps & {
+    label: string,
+    placeholder: string,
     onClosed: (searchQuery: string) => void;
 }
-export const SearchModal = ({ closeModal, onClosed }: props) => {
+export const TextFieldModal = ({ closeModal, onClosed, label, placeholder }: props) => {
     const [searchText, setSearchText] = useState('');
     const handleText = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(e.target.value);
@@ -21,8 +23,8 @@ export const SearchModal = ({ closeModal, onClosed }: props) => {
                     //@ts-ignore
                     ref={textField}
                     focusOnMount={true}
-                    label="Search"
-                    placeholder={'Search by station name or artists'}
+                    label={label}
+                    placeholder={placeholder}
                     onChange={handleText}
                 />
             </form>

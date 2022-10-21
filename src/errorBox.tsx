@@ -4,7 +4,8 @@ import { MdErrorOutline } from "react-icons/md";
 const errorWindow: React.CSSProperties = {
     position: 'relative',
     backgroundColor: 'red',
-    color: 'white'
+    color: 'white',
+    textAlign: 'center'
 }
 const centered: React.CSSProperties = {
     textAlign: "center"

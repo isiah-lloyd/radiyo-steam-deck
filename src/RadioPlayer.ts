@@ -1,6 +1,5 @@
-import { fetchNC, getRedirect } from './fetchNC';
-import { autocompleteAPIResponse, autocompleteAPIResponseArray, NowPlaying, PlaylistAPIResponse, reco2APIResponse, Station } from './interfaces';
-import { SpliceMetadata } from './SpliceMetadata';
+import { fetchNC } from './fetchNC';
+import { autocompleteAPIResponse, autocompleteAPIResponseArray, PlaylistAPIResponse, reco2APIResponse, Station } from './interfaces';
 
 export class RadioPlayer {
     public CURRENT_STATION: Station = {} as Station;
@@ -19,7 +18,7 @@ export class RadioPlayer {
         else if (category === 'GENRE') {
             query = '@genre%20' + encodeURIComponent(query) + '*';
         }
-        const playlistResults = await (await fetchNC(`http://api.dar.fm/playlist.php?callback=json${limit ? `&pagesize=${limit}` : ''}&q=${query}%20&partner_token=${this.RADIO_DIRECTORY_KEY}`)).json() as PlaylistAPIResponse;
+        const playlistResults = await (await fetchNC(`http://api.dar.fm/playlist.php?callback=json${limit ? `&pagesize=${limit}` : ''}&q=${encodeURIComponent(query)}%20&partner_token=${this.RADIO_DIRECTORY_KEY}`)).json() as PlaylistAPIResponse;
         if (playlistResults.success) {
             const results = playlistResults.result.filter((el: any) => {
                 return el.band === 'NET' || el.band === 'FM' || el.band === 'AM';
