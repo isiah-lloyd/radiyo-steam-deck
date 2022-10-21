@@ -31,6 +31,6 @@ export const getRedirect = async (url: string): Promise<string> => {
         return newUrl.response;
     }
     else {
-        throw new Error(`Error while trying to open stream for ${url}`);
+        throw new Error(newUrl.error);
     }
 }
