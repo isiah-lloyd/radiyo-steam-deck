@@ -12,6 +12,7 @@ import { ErrorBox } from "../errorBox";
 import { getRedirect } from "../fetchNC";
 import { Route, Station } from "../interfaces";
 import storage from "../storage";
+import logo from "../../images/logo.png"
 
 type PLAYER_STATUS = 'PLAYING' | 'PAUSED' | 'BUFFERING';
 const smallButtonStyle: React.CSSProperties = {
@@ -100,7 +101,7 @@ export const Player: VFC<{ station: Station, route: Route }> = ({ station, route
         }
     }
     const onImageError = (e: SyntheticEvent<HTMLImageElement, Event>) => {
-        e.currentTarget.style.display = 'none';
+        e.currentTarget.src = logo;
     }
     const setFav = () => {
         if (isFav) {
@@ -145,7 +146,7 @@ export const Player: VFC<{ station: Station, route: Route }> = ({ station, route
                     <SliderField value={volume} min={0} max={100} step={1} icon={<MdVolumeUp />} onChange={changeVolume} bottomSeparator="none" />
                     <div style={centerStyle}>
                         <div style={imageContainer}>
-                            <img onError={onImageError} style={{ width: '100%' }} src={station.image} />
+                            <img onError={onImageError} style={{ width: '100%' }} src={station.image ?? logo} />
                             <Spinner style={playerStatus === 'BUFFERING' ? { ...imageOverlay, display: 'block' } : imageOverlay} />
                         </div>
                         <div style={metadata}>
