@@ -59,7 +59,7 @@ export const Home: VFC<{ onSearch: (query: string) => void, onStationSelected: (
         Router.OpenQuickAccessMenu(QuickAccessTab.Decky);
         let response;
         if (url.substring(0, 4) == 'http' && url.substring(0, 5) !== 'https') {
-            showModal(<AlertModal title={'URL must be HTTPS'} description={''} />)
+            showModal(<AlertModal title={'URL must be HTTPS'} description={''} />, window)
         }
         else if (url.substring(0, 5) !== 'https') {
             url = 'https://' + url
@@ -71,18 +71,18 @@ export const Home: VFC<{ onSearch: (query: string) => void, onStationSelected: (
         catch (e: any) {
             console.log('Error while fetching');
             const title = `Error while fetching ${url}`
-            showModal(<AlertModal title={title} description={e.message} />)
+            showModal(<AlertModal title={title} description={e.message} />, window)
             return;
         }
         const contentType = response.headers[Object.keys(response.headers).find(key => key.toLowerCase() === 'content-type') ?? ''];
         const icyName = response.headers[Object.keys(response.headers).find(key => key.toLowerCase() === 'icy-name') ?? ''];
         if (contentType !== 'audio/mpeg') {
             const desc = `Got "content-type: ${contentType}"`;
-            showModal(<AlertModal title="URL must point to an MP3 stream" description={desc} />)
+            showModal(<AlertModal title="URL must point to an MP3 stream" description={desc} />, window)
         }
         else if (!icyName) {
             const desc = `I'm not sure if this is a good way to tell if this is a station, if you feel this is a mistake please file a bug on GitHub.`
-            showModal(<AlertModal title="Not a Stream" description={desc} />)
+            showModal(<AlertModal title="Not a Stream" description={desc} />, window)
         }
         else {
             const station: Station = {} as Station;
@@ -107,13 +107,13 @@ export const Home: VFC<{ onSearch: (query: string) => void, onStationSelected: (
                     <TextField
                         label="Search"
                         placeholder={'Search for radio station'}
-                        onClick={() => showModal(<TextFieldModal label="Search" placeholder="Search by station name or artists" onClosed={onSearchModalClosed} />)}
+                        onClick={() => showModal(<TextFieldModal label="Search" placeholder="Search by station name or artists" onClosed={onSearchModalClosed} />, window)}
                     />
                 </Focusable >
                 <Dropdown rgOptions={browseOptions} selectedOption={selectedOption} onChange={(e) => onBrowseOptionChange(e.data)}></Dropdown>
                 {errorMsg ? <ErrorMessage msg={errorMsg} /> : null}
                 <StationList stations={browseStations} onStationSelected={onStationSelected} />
-                {selectedOption === BROWSE_OPTIONS.Favorites ? <DialogButton style={{ marginTop: '1rem' }} onClick={() => showModal(<TextFieldModal label="Add Station by URL (Beta)" placeholder="Must point directly to MP3 stream. HTTPS URL required." onClosed={onCustomStationModalClosed} />)}>Add Station by URL...</DialogButton> : null
+                {selectedOption === BROWSE_OPTIONS.Favorites ? <DialogButton style={{ marginTop: '1rem' }} onClick={() => showModal(<TextFieldModal label="Add Station by URL (Beta)" placeholder="Must point directly to MP3 stream. HTTPS URL required." onClosed={onCustomStationModalClosed} />, window)}>Add Station by URL...</DialogButton> : null
                 }
             </PanelSection >
         )

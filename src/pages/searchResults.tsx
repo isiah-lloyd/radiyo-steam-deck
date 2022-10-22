@@ -59,7 +59,7 @@ export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station)
                     <StationList stations={results} onStationSelected={onStationSelected} />
                     <Focusable style={{ display: 'flex', alignItems: 'center', gap: '1rem' }} flow-children="horizontal">
                         <DialogButton style={{ width: '50%', minWidth: 0 }} onClick={() => route.changePage('home')}><MdHome /></DialogButton>
-                        <DialogButton onClick={() => showModal(<TextFieldModal label="Search" placeholder="Search by station name or artists" onClosed={onSearchModalClosed} />)} style={{ width: '50%', minWidth: 0 }}><MdSearch /></DialogButton>
+                        <DialogButton onClick={() => showModal(<TextFieldModal label="Search" placeholder="Search by station name or artists" onClosed={onSearchModalClosed} />, window)} style={{ width: '50%', minWidth: 0 }}><MdSearch /></DialogButton>
                     </Focusable>
                 </div>
             </PanelSection>
