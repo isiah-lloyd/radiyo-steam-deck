@@ -1,4 +1,5 @@
-import { ConfirmModal, ConfirmModalProps, ModalRoot, ModalRootProps, QuickAccessTab, Router, TextField } from 'decky-frontend-lib';
+import { ConfirmModal, ConfirmModalProps, QuickAccessTab, Router } from 'decky-frontend-lib';
+import { OpenQuickAccessMenu } from './RouterPolyfill';
 type props = ConfirmModalProps & {
     title: string,
     description: string,
@@ -6,7 +7,7 @@ type props = ConfirmModalProps & {
 }
 export const AlertModal = ({ closeModal, title, description }: props) => {
     return (
-        <ConfirmModal closeModal={closeModal} strTitle={title} strDescription={description} onOK={() => Router.OpenQuickAccessMenu(QuickAccessTab.Decky)} bAlertDialog={true}>
+        <ConfirmModal closeModal={closeModal} strTitle={title} strDescription={description} onOK={() => OpenQuickAccessMenu()} bAlertDialog={true}>
         </ConfirmModal>
     );
 };

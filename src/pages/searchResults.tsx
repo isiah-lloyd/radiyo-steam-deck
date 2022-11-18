@@ -14,6 +14,7 @@ import { Route, Station } from "../interfaces";
 import { RadioPlayer } from "../RadioPlayer";
 import { TextFieldModal } from "../TextFieldModal";
 import { StationList } from "../stationList";
+import { OpenQuickAccessMenu } from "../RouterPolyfill";
 
 export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station) => void, route: Route }> = ({ query, onStationSelected, route }) => {
     const [results, setResults] = useState<Station[]>([])
@@ -30,7 +31,7 @@ export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station)
         setIsLoading(false);
     }
     const onSearchModalClosed = async (q: string) => {
-        Router.OpenQuickAccessMenu(QuickAccessTab.Decky);
+        OpenQuickAccessMenu();
         setResults([]);
         setErrorMsg(undefined);
         setIsLoading(true);
