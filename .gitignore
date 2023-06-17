@@ -44,3 +44,9 @@ yalc.lock
 # Ignore output folder
 
 backend/out
+
+out
+out/*
+cli/
+cli/*
+cli/decky
