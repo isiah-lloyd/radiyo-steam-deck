@@ -4,7 +4,7 @@ import {
   ServerAPI,
   staticClasses,
 } from "decky-frontend-lib";
-import { useState, VFC } from "react";
+import { useEffect, useState, VFC } from "react";
 import { MdMusicNote, MdOutlineRadio, MdVolumeUp } from "react-icons/md";
 import { setServer } from "./fetchNC";
 import { Pages, Route, Station } from "./interfaces";
@@ -13,6 +13,7 @@ import { Player } from "./pages/player";
 import { SearchResults } from "./pages/searchResults";
 import { RadioPlayer } from "./RadioPlayer";
 import storage from "./storage";
+import { currentStation } from "./playerController";
 
 const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   setServer(serverAPI);
@@ -36,7 +37,12 @@ const Content: VFC<{ serverAPI: ServerAPI }> = ({ serverAPI }) => {
   function changePage(page: Pages) {
     setRoute((route) => ({ ...route, page: page }));
   }
-
+  useEffect(() => {
+    if (currentStation) {
+      setStation(currentStation);
+      changePage('player');
+    }
+  }, []);
   return (
     <div>
       {station && route.page === 'home' ? <DialogButton style={{ backgroundColor: '#66c0f4' }} onClick={() => changePage('player')}><MdMusicNote />{station.text}</DialogButton> : null}

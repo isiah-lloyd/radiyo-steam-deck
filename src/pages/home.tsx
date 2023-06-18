@@ -2,12 +2,12 @@ import {
     PanelSection,
     Focusable,
     TextField,
-    Router,
-    QuickAccessTab,
     showModal,
     Dropdown,
     DropdownOption,
     DialogButton,
+    Navigation,
+    QuickAccessTab,
 } from "decky-frontend-lib";
 import { useEffect, useState, VFC } from "react";
 import { ErrorMessage } from "../errorBox";
@@ -18,7 +18,6 @@ import { StationList } from "../stationList";
 import storage from "../storage";
 import { fetchNC } from "../fetchNC";
 import { AlertModal } from "../AlertModal";
-import { OpenQuickAccessMenu } from "../RouterPolyfill";
 enum BROWSE_OPTIONS {
     Favorites,
     Recently_Played,
@@ -29,7 +28,7 @@ export const Home: VFC<{ onSearch: (query: string) => void, onStationSelected: (
     const [selectedOption, setSelectedOption] = useState<BROWSE_OPTIONS>();
     const [errorMsg, setErrorMsg] = useState<string>();
     const onSearchModalClosed = async (query: string) => {
-        OpenQuickAccessMenu();
+        Navigation.OpenQuickAccessMenu(QuickAccessTab.Decky);
         onSearch(query);
     }
     const browseOptions: DropdownOption[] = [{ data: BROWSE_OPTIONS.Favorites, label: 'Favorites' }, { data: BROWSE_OPTIONS.Recently_Played, label: 'Recently Played' }, { data: BROWSE_OPTIONS.Trending, label: 'Trending' }]
@@ -57,7 +56,7 @@ export const Home: VFC<{ onSearch: (query: string) => void, onStationSelected: (
         }
     }
     const onCustomStationModalClosed = async (url: string) => {
-        OpenQuickAccessMenu();
+        Navigation.OpenQuickAccessMenu(QuickAccessTab.Decky);
         let response;
         if (url.substring(0, 4) == 'http' && url.substring(0, 5) !== 'https') {
             showModal(<AlertModal title={'URL must be HTTPS'} description={''} />)

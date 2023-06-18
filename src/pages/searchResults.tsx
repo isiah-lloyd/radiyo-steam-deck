@@ -6,6 +6,7 @@ import {
     Router,
     QuickAccessTab,
     Spinner,
+    Navigation,
 } from "decky-frontend-lib";
 import { useEffect, useState, VFC } from "react";
 import { MdHome, MdSearch, MdSmartToy } from "react-icons/md";
@@ -14,7 +15,6 @@ import { Route, Station } from "../interfaces";
 import { RadioPlayer } from "../RadioPlayer";
 import { TextFieldModal } from "../TextFieldModal";
 import { StationList } from "../stationList";
-import { OpenQuickAccessMenu } from "../RouterPolyfill";
 
 export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station) => void, route: Route }> = ({ query, onStationSelected, route }) => {
     const [results, setResults] = useState<Station[]>([])
@@ -31,7 +31,7 @@ export const SearchResults: VFC<{ query: string, onStationSelected: (T: Station)
         setIsLoading(false);
     }
     const onSearchModalClosed = async (q: string) => {
-        OpenQuickAccessMenu();
+        Navigation.OpenQuickAccessMenu(QuickAccessTab.Decky);
         setResults([]);
         setErrorMsg(undefined);
         setIsLoading(true);
