@@ -66,7 +66,6 @@ export const Home: VFC<{ onSearch: (query: string) => void, onStationSelected: (
         }
         try {
             response = await (await fetchNC(url, true)).response;
-            console.log(response);
         }
         catch (e: any) {
             console.log('Error while fetching');

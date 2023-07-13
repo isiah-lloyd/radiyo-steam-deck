@@ -3,6 +3,7 @@ const KEY_PREFIX = 'radiyo_'
 class Store {
     public recently_played: Station[] = [];
     public favorite_stations: Station[] = [];
+    public volume: number = 100;
     constructor() {
         this.favorite_stations = this.get('favs') ?? [];
         this.recently_played = this.get('rp') ?? [];
@@ -39,7 +40,15 @@ class Store {
             this.set('rp', this.recently_played);
         }
     }
-
+    setStoredVolume(volume: number) {
+        this.set('vol', volume)
+    }
+    /**
+     * @returns volume as decimal 0-1
+    */
+    getStoredVolume(): number {
+        return this.volume = this.get('vol') ?? 1;
+    }
 }
 
 export default new Store();

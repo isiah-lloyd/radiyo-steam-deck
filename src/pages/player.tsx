@@ -4,10 +4,9 @@ import {
     Spinner,
     SliderField,
     Focusable,
-    PanelSectionRow,
 } from "decky-frontend-lib";
-import React, { ReactEventHandler, SyntheticEvent, useEffect, useRef, useState, VFC } from "react";
-import { MdHome, MdPause, MdPlayArrow, MdStar, MdStarOutline, MdStop, MdVolumeUp } from "react-icons/md";
+import React, { SyntheticEvent, useEffect, useState, VFC } from "react";
+import { MdHome, MdPlayArrow, MdStar, MdStarOutline, MdStop, MdVolumeUp } from "react-icons/md";
 import { ErrorBox } from "../errorBox";
 import { getRedirect } from "../fetchNC";
 import { Route, Station } from "../interfaces";
@@ -57,6 +56,7 @@ export const Player: VFC<{ station: Station, route: Route }> = ({ station, route
         catch (e: any) {
             setErrorMsg(e.message);
         }
+        player.volume = storage.volume;
         player.load();
         player.play();
     }
@@ -77,6 +77,7 @@ export const Player: VFC<{ station: Station, route: Route }> = ({ station, route
                 break;
             case 'PAUSED':
                 player.play();
+                setCurrentStation(station)
                 break;
         }
     }
@@ -114,6 +115,7 @@ export const Player: VFC<{ station: Station, route: Route }> = ({ station, route
     const changeVolume = (volume: number) => {
         const normalizedVolume = (volume / 100.0)
         player.volume = normalizedVolume;
+        storage.setStoredVolume(normalizedVolume)
         setVolume(volume);
     }
     useEffect(() => {
@@ -125,18 +127,21 @@ export const Player: VFC<{ station: Station, route: Route }> = ({ station, route
         player.addEventListener('waiting', () => setPlayerStatus('BUFFERING'));
         player.addEventListener('stalled', () => setPlayerStatus('BUFFERING'));
         player.addEventListener('error', onPlayerError)
-
     }, [])
     useEffect(() => {
         if (station) {
             setErrorMsg(undefined);
             if (!currentStation || currentStation && currentStation.streamDownloadURL !== station.streamDownloadURL) {
                 setAudioSrc();
-                setIsFav(storage.isFav(station));
             }
             else if (player) {
-                setPlayerStatus('PLAYING')
+                setPlayerStatus('PLAYING');
             }
+            const storedVolume = storage.getStoredVolume();
+            console.log('setting volume slider to ', storedVolume * 100);
+            setVolume(storedVolume * 100);
+            console.log('reading volume as', volume);
+            setIsFav(storage.isFav(station));
             setCurrentStation(station);
         }
     }, [station]);

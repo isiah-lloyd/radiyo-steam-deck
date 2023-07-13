@@ -1,6 +1,6 @@
 {
   "name": "radiyo-for-steam-deck",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A decky plugin to play internet radio stations",
   "scripts": {
     "build": "shx rm -rf dist && rollup -c",

@@ -6,7 +6,6 @@ export function setServer(s: ServerAPI) {
 }
 export const fetchNC = async (url: string, customStation: boolean = false) => {
     const response = await (await server.callPluginMethod("fetch", { url, customStation })).result as { body: string, headers: object, status: number, error?: string }
-    console.log(response);
     if (response.status === 200) {
         return {
             response,
