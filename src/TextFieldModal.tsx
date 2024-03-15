@@ -1,4 +1,4 @@
-import { ModalRoot, ModalRootProps, Router, TextField } from 'decky-frontend-lib';
+import { DialogButton, ModalRoot, ModalRootProps, Router, TextField } from 'decky-frontend-lib';
 import { useEffect, useRef, useState } from 'react';
 type props = ModalRootProps & {
     label: string,
@@ -16,19 +16,21 @@ export const TextFieldModal = ({ closeModal, onClosed, label, placeholder }: pro
         //This will open up the virtual keyboard
         textField.current?.element?.click();
     }, []);
-    const submit = () => onClosed(searchText)
+    const submit = () => {
+        closeModal?.()
+        onClosed(searchText)
+    }
     return (
-        <ModalRoot closeModal={closeModal} onEscKeypress={closeModal}>
-            <form onSubmit={submit}>
-                <TextField
-                    //@ts-ignore
-                    ref={textField}
-                    focusOnMount={true}
-                    label={label}
-                    placeholder={placeholder}
-                    onChange={handleText}
-                />
-            </form>
+        <ModalRoot closeModal={closeModal} onOK={submit} onEscKeypress={closeModal}>
+            <TextField
+                //@ts-ignore
+                ref={textField}
+                focusOnMount={true}
+                label={label}
+                placeholder={placeholder}
+                onChange={handleText}
+                
+            />
         </ModalRoot>
     );
 };
