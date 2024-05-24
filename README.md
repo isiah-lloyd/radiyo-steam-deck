@@ -1,4 +1,6 @@
 # RadiYo! For Steam Deck
+![Decky Loader](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fplugins.deckbrew.xyz%2Fplugins&query=%24%5B%3F(%40.name%20%3D%3D%20'RadiYo!')%5D.downloads&suffix=%20installs&label=decky&color=3ea6a3)
+
 ![](/images/player.jpg?raw=true)
 
 Quickly search and listen to internet radio stations from the Steam Deck's quick access menu.
